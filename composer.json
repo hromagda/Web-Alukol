@@ -1,0 +1,17 @@
+{
+    "name": "petrk/alukol-web",
+    "description": "Webová prezentace firmy Alukol ve vlastním MVC architektonickém stylu.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Madla",
+            "email": "hromagda@centrum.cz"
+        }
+    ],
+    "require": {}
+}

@@ -1,0 +1,66 @@
+
+<!-- CAROUSEL -->
+<div id="myCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="<?= url('images/carousel/nahled1.jpg') ?>" class="d-block w-100" alt="Ukázka realizace pergoly">
+        </div>
+        <div class="carousel-item">
+            <img src="<?= url('images/carousel/nahled2.jpg') ?>" class="d-block w-100" alt="Ukázka realizace pergoly">
+        </div>
+        <div class="carousel-item">
+            <img src="<?= url('images/carousel/nahled3.jpg') ?>" class="d-block w-100" alt="Ukázka realizace pergoly">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Předchozí</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Další</span>
+    </button>
+</div>
+
+<!-- KARTY S PRODUKTY -->
+<div class="container">
+    <div class="realizujeme text-center my-5">
+        <img src="<?= url('images/logo/alukol.jpg') ?>" width="130" alt="Alukol" class="mb-4">
+        <h2>Realizujeme montáže v celém Jihomoravském a Olomouckém kraji</h2>
+
+        <div class="row g-3 mt-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="<?= url('images/cards/zaluzie.jpg') ?>" alt="Montáž žaluzií">
+                    <div class="card-body">
+                        <h3 class="card-title">Stínící technika</h3>
+                        <p class="card-text">Efektivní stínění pro Váš domov, zahrady a terasy, které vás ochrání před slunečními paprsky.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="<?= url('images/cards/pergola.jpg') ?>" alt="Pergoly">
+                    <div class="card-body">
+                        <h3 class="card-title">Pergoly</h3>
+                        <p class="card-text">Stylové pergoly pro váš venkovní prostor. Zaručí pohodlí a krásu celé zahrady.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="<?= url('images/cards/markyza.jpg') ?>" alt="Markýzy">
+                    <div class="card-body">
+                        <h3 class="card-title">Markýzy</h3>
+                        <p class="card-text">Elegantní markýzy pro ochranu proti slunci, které zvýší komfort vaší terasy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

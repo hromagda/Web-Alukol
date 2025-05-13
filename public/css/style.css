@@ -1,0 +1,245 @@
+/* ========== ZÁKLAD ========== */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* Důležité pro flexbox */
+    font-family: system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column; /* Umožní flexbox */
+}
+
+
+/* ========== HLAVNÍ OBSAH ========== */
+main {
+    flex: 1; /* Zajistí, že hlavní obsah se roztáhne a zůstane mezi headerem a footerem */
+
+}
+
+
+/* ========== NAVIGACE ========== */
+.navbar {
+    background-color: #25282b;
+}
+
+.navbar-brand img {
+    height: auto;
+    max-height: 50px;
+}
+
+.navbar-nav .nav-link {
+    color: #f8f9fa;
+    margin-right: 0.5rem;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #ffc107;
+}
+
+
+/* ========== AKČNÍ OKNO ========== */
+
+.promo-offer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* tmavé poloprůhledné pozadí */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.promo-offer-content {
+    background: rgba(0, 0, 0, 0.7); /* tmavé pozadí pro samotné okno */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.promo-offer-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.promo-offer-content p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.promo-offer-content p span {
+    color: rgb(50, 186, 236); /* modrý text */
+}
+
+.promo-offer-content a.btn-danger {
+    font-size: 1rem;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+.close-promo-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+/* ========== COOKIE LIŠTA ========== */
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(61, 82, 116, 0.95); /* tmavě modrá barva */
+    color: white;
+    padding: 15px 20px;
+    z-index: 1000;
+    font-size: 0.9rem;
+}
+
+.cookie-consent-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cookie-consent-banner p {
+    margin: 0 0 10px 0;
+    flex: 1 1 auto;
+}
+
+.cookie-consent-banner button {
+    flex: 0 0 auto;
+}
+
+
+/* ========== MODÁLNÍ OKNO ========== */
+
+/* Úprava pozice modálního okna */
+.modal-dialog {
+    max-width: 500px; /* Maximální šířka okna */
+    position: absolute; /* Zajistí, že okno bude pozicováno na základě okna */
+    left: 10%; /* Zarovnáme okno na levý okraj */
+    /*top: 50%; /* Okno bude vystředěné vertikálně */
+    transform: translateY(-50%); /* Upravíme pozici okna, aby bylo skutečně vycentrované na vertikále */
+}
+
+/* Základní styly pro celé modální okno */
+.modal-content {
+    background-color: #25282b; /* Černé pozadí pro celé modální okno */
+    color: #fff; /* Bílé písmo pro všechny texty */
+}
+
+
+.modal-header {
+    border-bottom: none; /* Odstraní oddělovací čáru mezi nadpisem a obsahem */
+}
+
+.modal-header .modal-title {
+    font-size: 1.8rem; /* Zvětšíme nadpis pro lepší vzhled */
+    color: rgb(50,186,236); /* Modrý text pro nadpis */
+}
+
+.modal-body {
+    display: block; /* Zajistí, že celý obsah bude viditelný */
+    max-height: 400px; /* Určím maximální výšku, pokud je obsah příliš dlouhý */
+    overflow-y: auto;  /* Povolit posouvání, pokud obsah přesahuje výšku */
+    padding: 20px; /* Přidáme nějaké vnitřní odsazení pro lepší vzhled */
+}
+
+.modal-body ul {
+    list-style: none;  /* Zajistí odstranění přednastavených odrážek */
+    padding-left: 0;    /* Odstraní případný levý odsazení */
+}
+
+.modal-body li {
+    margin-bottom: 15px; /* Větší mezery mezi jednotlivými položkami */
+}
+
+.modal-body a {
+    color: #fff; /* Bílé odkazy */
+    text-decoration: none; /* Odstraní podtržení u odkazů */
+}
+
+.modal-footer {
+    background-color: #1f2225; /* Tmavší pozadí pro spodní část */
+    border-top: none; /* Odstraní horní čáru oddělující obsah */
+}
+
+.modal-footer .btn-secondary {
+    background-color: #dc3545; /* Tmavší tlačítko */
+    color: #fff; /* Bílé písmo na tlačítkách */
+    border: none; /* Bez okraje */
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #c82333; /* Světlejší odstín při hover */
+}
+
+/* ========== CAROUSEL ========== */
+#myCarousel {
+    margin: 0;
+    padding: 0;
+}
+
+.carousel-inner,
+.carousel-item,
+.carousel-item img {
+    width: 100%;
+    height: auto;
+}
+
+#myCarousel .carousel-item {
+    height: 550px; /* Nastav podle toho, co se ti hodí – třeba 400px nebo jinou výšku */
+}
+
+#myCarousel .carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* ========== CARDS ========== */
+.card-img-top {
+    height: 50%;
+    object-fit: cover;
+}
+
+/* ========== FOOTER ========== */
+footer {
+    font-size: 0.9rem;
+    background-color: #25282b;
+    color: #f8f9fa;
+    padding: 1rem 0;
+    margin-top: auto; /* Zajistí, že patička bude vždy na spodní části */
+}
+
+/* ========== RESPONSIVE ÚPRAVY ========== */
+@media (min-width: 768px) {
+    .navbar-nav .nav-link {
+        margin-right: 1rem;
+    }
+}
