@@ -29,3 +29,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+// JS pro nacitani obrazku v galerii
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Načti obrázky galerie AJAXem
+    const galleryContainer = document.getElementById("gallery-container");
+
+    fetch("/galerie/load-images")
+        .then(response => response.text())
+        .then(html => {
+            galleryContainer.innerHTML = html;
+
+            // Znovu nastav lightbox (to stačí, není nutné .init())
+            if (window.lightbox) {
+                lightbox.option({
+                    resizeDuration: 200,
+                    wrapAround: true
+                });
+            }
+        }) // konec .then()
+        .catch(error => {
+            galleryContainer.innerHTML = "<p>Obrázky se nepodařilo načíst.</p>";
+            console.error("Chyba při načítání galerie:", error);
+        });
+});
