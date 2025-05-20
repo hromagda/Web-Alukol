@@ -263,3 +263,39 @@ footer {
 .gallery-grid img:hover {
     transform: scale(1.05);
 }
+
+/* ========== KONTAKTNI FORMULAR ========== */
+.btn-outline{
+    background: transparent;
+    border-color: white;
+    color: white;
+}
+
+.btn-outline:hover{
+    background: white;
+    color: #1b5891;
+    cursor: pointer;
+}
+
+/* Pozadí pro každý blok */
+.bg-form-form {
+    background-color: #3d5274;  /* Barva pozadí pro formulář */
+    padding: 30px;              /* Padding uvnitř formuláře */
+}
+
+.bg-form-contact {
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/pictures/zaluzie.jpg');
+    background-size: cover;  /* Zajistí, že obrázek pokryje celý blok */
+    background-position: center; /* Udržuje obrázek uprostřed */
+    padding: 30px; /* Padding uvnitř sekce */
+    color: white; /* Zajišťuje, že text bude bílý na tmavém pozadí */
+
+}
+
+
+
+
+
+
+

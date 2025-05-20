@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; }
+        h2 { color: #2c3e50; }
+        table { border-collapse: collapse; width: 100%; }
+        td { padding: 8px; border-bottom: 1px solid #ddd; }
+        strong { color: #2c3e50; }
+    </style>
+</head>
+<body>
+<h2>Nová zpráva z webu Alukol</h2>
+<table>
+    <tr><td><strong>Jméno:</strong></td><td><?= htmlspecialchars($name) ?></td></tr>
+    <tr><td><strong>Email:</strong></td><td><?= htmlspecialchars($email) ?></td></tr>
+    <tr><td><strong>Telefon:</strong></td><td><?= htmlspecialchars($phone) ?></td></tr>
+    <tr><td><strong>Místo montáže:</strong></td><td><?= htmlspecialchars($locality) ?></td></tr>
+    <tr><td colspan="2"><strong>Zpráva:</strong><br><?= nl2br(htmlspecialchars($message)) ?></td></tr>
+</table>
+</body>
+</html>

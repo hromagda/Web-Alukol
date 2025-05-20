@@ -1,2 +1,84 @@
-<h1>Kontaktujte nás</h1>
-<p>Sem přijde kontaktní formulář nebo údaje.</p>
+<div class="container" style="margin-top: 100px;">
+    <div class="row ">
+        <!-- Kontaktní formulář -->
+        <div class="col-md-8 text-white bg-form-form">
+            <div>
+                <h1>Pošlete nám nezávaznou poptávku</h1>
+            </div>
+            <div class="mb-3 mt-5">
+                <h5>Máte-li jakékoliv dotazy týkající se našich nabízených služeb, kontaktujte nás pomocí níže uvedeného formuláře, telefonicky nebo emailem.</h5>
+            </div>
+
+            <?php if (!empty($success)): ?>
+                <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
+            <?php endif; ?>
+
+            <?php if (!empty($errors)): ?>
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        <?php foreach ($errors as $error): ?>
+                            <li><?= htmlspecialchars($error) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <form method="post" action="<?= url('kontakt/odeslat') ?>" novalidate>
+                <?= csrf_field() ?>
+                <div class="mb-3">
+                    <label for="contactFormControlInputName">Jméno a příjmení *</label>
+                    <input type="text" class="form-control rounded-0 border-0" id="contactFormControlInputName" name="name"
+                           required autocomplete="name" value="<?= htmlspecialchars($old['name'] ?? '') ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="contactFormControlInputMail">E-mail *</label>
+                    <input type="email" class="form-control rounded-0 border-0" id="contactFormControlInputMail" name="email"
+                           required autocomplete="email" value="<?= htmlspecialchars($old['email'] ?? '') ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="contactFormControlInputTel">Telefon</label>
+                    <input type="tel" class="form-control rounded-0 border-0" id="contactFormControlInputTel" name="phone"
+                           autocomplete="tel" value="<?= htmlspecialchars($old['phone'] ?? '') ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="contactFormControlInputLocality">Místo montáže</label>
+                    <input type="text" class="form-control rounded-0 border-0" id="contactFormControlInputLocality" name="locality"
+                           autocomplete="address-level2" value="<?= htmlspecialchars($old['locality'] ?? '') ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="contactFormControlTextarea1">Zpráva *</label>
+                    <textarea class="form-control rounded-0 border-0" id="contactFormControlTextarea1" name="message" rows="6"
+                              required maxlength="1000"><?= htmlspecialchars($old['message'] ?? '') ?></textarea>
+                </div>
+
+                <div class="form-check mb-2">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="gdpr" value="1" required>
+                        Souhlasím s podmínkami GDPR *
+                    </label>
+                </div>
+
+
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-outline py-2 px-5 rounded-0">ODESLAT</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Kontaktní informace -->
+        <div class="col-md-4 text-white bg-form-contact">
+            <h1>Kontaktní informace</h1>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:alukol@post.cz" style="color: #fff;">alukol@post.cz</a></li>
+                <li><strong>Telefon:</strong> +420 778 013 813</li>
+                <li><strong>Adresa:</strong> Ludéřov 42, 783 44 Drahanovice</li>
+                <li><strong>IČO:</strong> 09925066</li>
+            </ul>
+        </div>
+    </div>
+</div>

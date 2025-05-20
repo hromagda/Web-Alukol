@@ -23,6 +23,7 @@ class Router
             'galerie/load-images' => [GalleryController::class, 'loadImages'],
             'sluzby' => [ServicesController::class, 'index'],
             'kontakt' => [ContactController::class, 'index'],
+            'kontakt/odeslat' => [ContactController::class, 'send'],
         ];
 
         // Nejprve zkusíme klíč jako dvouúrovňový segment
