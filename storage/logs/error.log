@@ -1,0 +1,1 @@
+[2025-05-20 19:41:18] ERROR: Chyba při odesílání e-mailu {"exception":"SMTP Error: Could not connect to SMTP host. Failed to connect to server","data":{"name":"karla K","email":"r@seznam.cz","phone":"456654456","locality":"Ol","message":"Oj","gdpr":"1"}}

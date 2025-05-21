@@ -72,7 +72,14 @@
                     <a class="nav-link<?= is_active('sluzby') ?>" href="<?= url('sluzby') ?>">Nabídka služeb</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Kontakt</a>
+                    <a class="nav-link" href="#" id="contactPopover" data-bs-toggle="popover" data-bs-html="true" title="Kontakt">
+                        Kontakt
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="partnersPopover" data-bs-toggle="popover" data-bs-html="true" title="Naši partneři">
+                        Partneři
+                    </a>
                 </li>
             </ul>
 
@@ -85,28 +92,20 @@
     <?= $content ?? '<p>Obsah nebyl načten.</p>' ?>
 </main>
 
-<!-- MODÁLNÍ OKNO -->
-<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="contactModalLabel">Kontaktní informace</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zavřít"></button>
-            </div>
-            <div class="modal-body">
-                <ul>
-                    <li><strong>Email:</strong> <a href="mailto:alukol@post.cz">alukol@post.cz</a></li>
-                    <li><strong>Telefon:</strong> +420 778 013 813</li>
-                    <li><strong>Adresa:</strong> Ludéřov 42, 783 44 Drahanovice</li>
-                    <li><strong>IČO:</strong> 09925066</li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>
-            </div>
-        </div>
+<!-- POPOVER KONTAKT -->
+<div id="customContactPopover" class="popover contact-popover shadow" style="display: none; position: absolute; z-index: 1050;">
+    <div class="popover-body">
+        <ul class="list-unstyled mb-3">
+            <li><strong>Email:</strong> <a href="mailto:alukol@post.cz">alukol@post.cz</a></li>
+            <li><strong>Telefon:</strong> +420 778 013 813</li>
+            <li><strong>Adresa:</strong> Ludéřov 42, 783 44 Drahanovice</li>
+            <li><strong>IČO:</strong> 09925066</li>
+        </ul>
+        <a href="<?= url('kontakt') ?>" class="btn btn-danger">Kontaktujte nás</a>
     </div>
 </div>
+
+
 
 <footer class="text-center py-3 mt-5">
     <small>&copy; <?= date('Y') ?> Alukol. Všechna práva vyhrazena.</small>

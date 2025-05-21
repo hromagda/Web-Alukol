@@ -54,3 +54,42 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Chyba při načítání galerie:", error);
         });
 });
+
+const partnersContent = `
+    <div class="d-flex flex-column align-items-center">
+        <img src="/images/logo/isotra.jpg" alt="Isotra" class="mb-2">
+        <img src="/images/logo/neva.jpg" alt="NEVA" class="mb-2">
+        <img src="/images/logo/veka_logo.png" alt="VEKA">
+    </div>
+`;
+
+const partnersTrigger = document.getElementById('partnersPopover');
+
+const popover = new bootstrap.Popover(partnersTrigger, {
+    content: partnersContent,
+    placement: 'bottom',
+    trigger: 'focus', // zavře se kliknutím mimo
+    html: true
+});
+
+// Aktivace kontakt popoveru
+const contactContent = `
+    <ul class="list-unstyled mb-3">
+        <li><strong>Email:</strong> <a href="mailto:alukol@post.cz">alukol@post.cz</a></li>
+        <li><strong>Telefon:</strong> +420 778 013 813</li>
+        <li><strong>Adresa:</strong> Ludéřov 42, 783 44 Drahanovice</li>
+        <li><strong>IČO:</strong> 09925066</li>
+    </ul>
+    <a href="${window.location.origin}/kontakt" class="btn btn-danger">Kontaktujte nás</a>
+`;
+
+const contactTrigger = document.getElementById('contactPopover');
+if (contactTrigger) {
+    new bootstrap.Popover(contactTrigger, {
+        trigger: 'focus',
+        html: true,
+        content: contactContent,
+        placement: 'bottom',
+        customClass: 'contact-popover'
+    });
+}

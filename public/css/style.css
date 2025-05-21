@@ -293,6 +293,310 @@ footer {
 
 }
 
+.honeypot {
+    position: absolute;
+    left: -9999px;
+}
+
+/* ========== ZÁKLAD ========== */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* Důležité pro flexbox */
+    font-family: system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column; /* Umožní flexbox */
+}
+
+
+/* ========== HLAVNÍ OBSAH ========== */
+main {
+    flex: 1; /* Zajistí, že hlavní obsah se roztáhne a zůstane mezi headerem a footerem */
+
+}
+
+
+/* ========== NAVIGACE ========== */
+.navbar {
+    background-color: #25282b;
+}
+
+.navbar-brand img {
+    height: auto;
+    max-height: 50px;
+}
+
+.navbar-nav .nav-link {
+    color: #f8f9fa;
+    margin-right: 0.5rem;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #ffc107;
+}
+
+
+/* ========== AKČNÍ OKNO ========== */
+
+.promo-offer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* tmavé poloprůhledné pozadí */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.promo-offer-content {
+    background: rgba(0, 0, 0, 0.7); /* tmavé pozadí pro samotné okno */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.promo-offer-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.promo-offer-content p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.promo-offer-content p span {
+    color: rgb(50, 186, 236); /* modrý text */
+}
+
+.promo-offer-content a.btn-danger {
+    font-size: 1rem;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+.close-promo-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+/* ========== COOKIE LIŠTA ========== */
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(61, 82, 116, 0.95); /* tmavě modrá barva */
+    color: white;
+    padding: 15px 20px;
+    z-index: 1000;
+    font-size: 0.9rem;
+}
+
+.cookie-consent-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cookie-consent-banner p {
+    margin: 0 0 10px 0;
+    flex: 1 1 auto;
+}
+
+.cookie-consent-banner button {
+    flex: 0 0 auto;
+}
+
+
+/* ========== CAROUSEL ========== */
+#myCarousel {
+    margin: 0;
+    padding: 0;
+}
+
+.carousel-inner,
+.carousel-item,
+.carousel-item img {
+    width: 100%;
+    height: auto;
+}
+
+#myCarousel .carousel-item {
+    height: 550px; /* Nastav podle toho, co se ti hodí – třeba 400px nebo jinou výšku */
+}
+
+#myCarousel .carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* ========== CARDS ========== */
+.card-img-top {
+    height: 50%;
+    object-fit: cover;
+}
+
+/* ========== FOOTER ========== */
+footer {
+    font-size: 0.9rem;
+    background-color: #25282b;
+    color: #f8f9fa;
+    padding: 1rem 0;
+    margin-top: auto; /* Zajistí, že patička bude vždy na spodní části */
+}
+
+/* ========== RESPONSIVE ÚPRAVY ========== */
+@media (min-width: 768px) {
+    .navbar-nav .nav-link {
+        margin-right: 1rem;
+    }
+}
+
+/* ========== GALERIE ========== */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 1rem;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* ========== KONTAKTNI FORMULAR ========== */
+.btn-outline{
+    background: transparent;
+    border-color: white;
+    color: white;
+}
+
+.btn-outline:hover{
+    background: white;
+    color: #1b5891;
+    cursor: pointer;
+}
+
+/* Pozadí pro každý blok */
+.bg-form-form {
+    background-color: #3d5274;  /* Barva pozadí pro formulář */
+    padding: 30px;              /* Padding uvnitř formuláře */
+}
+
+.bg-form-contact {
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/pictures/zaluzie.jpg');
+    background-size: cover;  /* Zajistí, že obrázek pokryje celý blok */
+    background-position: center; /* Udržuje obrázek uprostřed */
+    padding: 30px; /* Padding uvnitř sekce */
+    color: white; /* Zajišťuje, že text bude bílý na tmavém pozadí */
+
+}
+
+.honeypot {
+    position: absolute;
+    left: -9999px;
+}
+
+
+/* ========== POPOVERY KONTAKT/PARTNERI ========== */
+.popover {
+    max-width: 400px; /* omezí šířku */
+    background-color: #343a40; /* tmavé pozadí */
+    color: #fff;
+    border: 1px solid #495057;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.popover-header {
+    background-color: #212529;
+    color: #ffc107; /* zvýrazněný text */
+    font-weight: bold;
+    border-bottom: 1px solid #495057;
+    font-size: 1.1rem;
+}
+
+/* ========== POPOVERY KONTAKT/PARTNERI ========== */
+.popover {
+    max-width: 400px; /* omezí šířku */
+    background-color: #343a40; /* tmavé pozadí */
+    color: #fff;
+    border: 1px solid #495057;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.popover-header {
+    background-color: #212529;
+    color: #ffc107; /* zvýrazněný text */
+    font-weight: bold;
+    border-bottom: 1px solid #495057;
+    font-size: 1.1rem;
+}
+
+.popover-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    color: #fff; /* bílé písmo */
+    font-size: 1.1rem; /* větší písmo */
+    line-height: 1.6; /* větší výška řádku */
+}
+
+
+
+.popover-body img {
+    /*ax-height: 80px;
+    max-width: 60px;*/
+    object-fit: contain;
+    filter: brightness(0.95) contrast(1.1); /* zlepšení vzhledu na tmavém pozadí */
+}
+
+
+
+
+
 
 
 

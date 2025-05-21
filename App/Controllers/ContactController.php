@@ -8,6 +8,7 @@ use PHPMailer\PHPMailer\Exception;
 use App\Core\View;
 use App\Validation\ContactFormValidator;
 use App\Core\MailView;
+use App\Core\Logger;
 
 
 class ContactController
@@ -19,6 +20,16 @@ class ContactController
 
     public function send()
     {
+        //Kontrola honeypot
+        if (!empty($_POST['website'])) {
+            // Honeypot byl vyplněn – pravděpodobně bot
+            View::render('contact/index', [
+                'errors' => ['Zprávu se nepodařilo odeslat.'],
+                'old' => $_POST
+            ]);
+            return;
+        }
+
         $data = [
             'name'     => trim($_POST['name'] ?? ''),
             'email'    => trim($_POST['email'] ?? ''),
@@ -84,6 +95,11 @@ class ContactController
                 'old' => []
             ]);
         } catch (Exception $e) {
+            Logger::error('Chyba při odesílání e-mailu', [
+                'exception' => $e->getMessage(),
+                'data' => $data,
+            ]);
+
             View::render('contact/index', [
                 'errors' => ['Zprávu se nepodařilo odeslat. Zkuste to prosím později.'],
                 'old' => $data
