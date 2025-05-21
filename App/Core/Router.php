@@ -19,6 +19,11 @@ class Router
         $routes = [
             '' => [HomeController::class, 'index'],
             'admin' => [AdminController::class, 'dashboard'],
+            'admin/edit_offer' => [AdminController::class, 'editOffer'],
+            'admin/login' => [AdminController::class, 'login'],
+            'admin/logout' => [AdminController::class, 'logout'],
+            'admin/gallery' => [AdminController::class, 'manageGallery'],
+            'admin/messages' => [AdminController::class, 'showMessages'],
             'galerie' => [GalleryController::class, 'index'],
             'galerie/load-images' => [GalleryController::class, 'loadImages'],
             'sluzby' => [ServicesController::class, 'index'],

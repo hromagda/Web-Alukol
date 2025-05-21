@@ -59,7 +59,8 @@ class ContactController
         }
 
         // Uložení do DB
-        ContactMessage::save($data['name'], $data['email'], $data['message'], $data['phone'], $data['locality']);
+        $contactModel = new ContactMessage();
+        $contactModel->save($data['name'], $data['email'], $data['message'], $data['phone'], $data['locality']);
 
         // Odeslání e-mailu
         $config = require __DIR__ . '/../../config/mail.php';

@@ -1,0 +1,17 @@
+<h2>Přijaté zprávy</h2>
+
+<?php if (empty($messages)): ?>
+    <p>Žádné zprávy zatím nepřišly.</p>
+<?php else: ?>
+    <div class="list-group">
+        <?php foreach ($messages as $msg): ?>
+            <div class="list-group-item mb-2">
+                <strong><?= htmlspecialchars($msg['name']) ?></strong>
+                (<?= htmlspecialchars($msg['email']) ?>)
+                <?php if ($msg['phone']) echo '📞 ' . htmlspecialchars($msg['phone']); ?><br>
+                <small><?= htmlspecialchars($msg['created_at']) ?></small>
+                <p class="mb-0 mt-2"><?= nl2br(htmlspecialchars($msg['message'])) ?></p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

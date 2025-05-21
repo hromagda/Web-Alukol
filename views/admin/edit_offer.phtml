@@ -1,0 +1,23 @@
+
+<div class="container" style="margin-top: 100px;">
+    <h2>Editace akční nabídky</h2>
+
+<p>Jste přihlášen jako <strong><?= htmlspecialchars($username) ?></strong>.</p>
+
+<?php if ($success): ?>
+    <div class="alert alert-success"><?= $success ?></div>
+<?php endif; ?>
+<?php if ($error): ?>
+    <div class="alert alert-danger"><?= $error ?></div>
+<?php endif; ?>
+
+<form method="post" class="mb-4">
+    <div class="mb-3">
+        <label for="content" class="form-label">Text akční nabídky:</label>
+        <input type="text" name="content" id="content" class="form-control" value="<?= htmlspecialchars($offer['content'] ?? '') ?>" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Uložit změny</button>
+</form>
+
+<p><a href="<?= url('admin') ?>" class="btn btn-secondary">Zpět na administraci</a></p>
+</div>

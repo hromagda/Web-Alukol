@@ -35,7 +35,7 @@
     <!-- AKČNÍ NABÍDKA (vyskakovací okno) -->
     <div id="promoOfferModal" class="promo-offer-modal" style="display: none;">
         <div class="promo-offer-content">
-            <h1>AKČNÍ NABÍDKA: Při objednávce do konce dubna 15% SLEVA</h1>
+            <h1><?= htmlspecialchars($promoContent) ?></h1>
             <p><span>Domluvte si zaměření ZDARMA právě teď!</span></p>
             <a href="<?= url('kontakt') ?>" class="btn btn-danger me-5">Kontaktujte nás</a>
             <button id="closePromoOfferBtn" class="close-promo-btn" aria-label="Zavřít">×</button>
@@ -81,6 +81,20 @@
                         Partneři
                     </a>
                 </li>
+
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link<?= is_active('admin') ?>" href="<?= url('admin') ?>">Administrátorská sekce</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= url('admin/logout') ?>">Odhlásit se (<?= htmlspecialchars($_SESSION['user']['username']) ?>)</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link<?= is_active('admin/login') ?>" href="<?= url('admin/login') ?>">Přihlášení administrátora</a>
+                    </li>
+                <?php endif; ?>
+
             </ul>
 
             <a href="<?= url('kontakt') ?>" class="btn btn-danger">Kontaktujte nás</a>

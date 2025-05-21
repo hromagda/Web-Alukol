@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Models\PromoOffer;
+
 class View
 {
     public static function render(string $viewPath, array $params = [], string $pageTitle = ''): void
@@ -15,6 +17,12 @@ class View
 
         // Proměnné do šablony
         extract($params);
+
+        // Načteme promo text z databáze
+        $promoModel = new PromoOffer();
+        $promoOffer = $promoModel->getOffer(); // Vrací pole nebo false
+        $promoContent = $promoOffer['content'] ?? ''; // Vytáhneme pouze text
+
 
         // Bufferujeme výstup konkrétního view
         ob_start();
