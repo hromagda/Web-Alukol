@@ -1,0 +1,55 @@
+<?php
+// Obsah formuláře vložený jako proměnná $content
+ob_start();
+?>
+
+<form method="post" action="<?= url('admin/update_article') ?>" enctype="multipart/form-data">
+        <?= csrf_field() ?>
+        <input type="hidden" name="id" value="<?= htmlspecialchars($article['id']) ?>">
+
+        <div class="mb-3">
+            <label for="title">Titulek:</label>
+            <input type="text" class="form-control" id="title" name="title" value="<?= htmlspecialchars($article['title']) ?>">
+        </div>
+
+        <div class="mb-3">
+            <label for="content">Obsah článku:</label>
+            <textarea id="content" name="content" rows="10"><?= $article['content'] ?></textarea>
+        </div>
+
+    <?php if (!empty($article['image'])): ?>
+        <p>Aktuální obrázek:</p>
+        <img src="/<?= htmlspecialchars($article['image']) ?>" alt="Obrázek článku" class="img-fluid mb-3" style="max-width: 200px;">
+        <input type="hidden" name="existing_image" value="<?= htmlspecialchars($article['image']) ?>">
+    <?php endif; ?>
+
+    <div class="mb-3">
+        <label for="image">Obrázek článku:</label>
+        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+    </div>
+
+        <button type="submit" class="btn btn-primary">Uložit změny</button>
+    </form>
+
+<?php include __DIR__ . '/../partials/back_button.phtml'; ?>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            tinymce.init({
+                selector: '#content',
+                height: 500,
+                menubar: false,
+                plugins: 'link image lists code table fullscreen',
+                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image | code fullscreen',
+                language: 'cs'
+            });
+        });
+    </script>
+
+<?php
+$content = ob_get_clean();
+$title = 'Upravit článek';
+include __DIR__ . '/../partials/admin_card.phtml';
+?>
+
+

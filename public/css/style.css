@@ -461,8 +461,28 @@ main {
 
 /* ========== CARDS ========== */
 .card-img-top {
-    height: 50%;
+    height: 150px;
     object-fit: cover;
+    width: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Efekt zvednutí karty při najetí */
+}
+
+.card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #3d5274;
+}
+
+.card-text {
+    font-size: 0.9em;
+    color: #3d5274;
+}
+
+.realizujeme h2 {
+    color: #3d5274;
 }
 
 /* ========== FOOTER ========== */
@@ -472,6 +492,17 @@ footer {
     color: #f8f9fa;
     padding: 1rem 0;
     margin-top: auto; /* Zajistí, že patička bude vždy na spodní části */
+}
+
+footer a {
+    color: #f8f9fa; /* Stejná jako text */
+    text-decoration: none; /* Bez podtržení */
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff; /* Mírně světlejší při hoveru */
+    text-decoration: underline;
 }
 
 /* ========== RESPONSIVE ÚPRAVY ========== */
@@ -499,6 +530,10 @@ footer {
 
 .gallery-grid img:hover {
     transform: scale(1.05);
+}
+
+.gallery-section h1 {
+    color: #3d5274;
 }
 
 /* ========== KONTAKTNI FORMULAR ========== */
@@ -538,30 +573,13 @@ footer {
 
 /* ========== POPOVERY KONTAKT/PARTNERI ========== */
 .popover {
-    max-width: 400px; /* omezí šířku */
+    /*max-width: 400px; /* omezí šířku */
     background-color: #343a40; /* tmavé pozadí */
     color: #fff;
     border: 1px solid #495057;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
 
-.popover-header {
-    background-color: #212529;
-    color: #ffc107; /* zvýrazněný text */
-    font-weight: bold;
-    border-bottom: 1px solid #495057;
-    font-size: 1.1rem;
-}
-
-/* ========== POPOVERY KONTAKT/PARTNERI ========== */
-.popover {
-    max-width: 400px; /* omezí šířku */
-    background-color: #343a40; /* tmavé pozadí */
-    color: #fff;
-    border: 1px solid #495057;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
 .popover-header {
@@ -587,14 +605,21 @@ footer {
 
 
 .popover-body img {
-    /*ax-height: 80px;
-    max-width: 60px;*/
-    object-fit: contain;
+    /*height: 50px;*/
+    max-width: 60px;
+    /*object-fit: contain;
     filter: brightness(0.95) contrast(1.1); /* zlepšení vzhledu na tmavém pozadí */
 }
 
+.realizujeme h1.text-center {
+    color: #3d5274;
+}
 
+/* ========== BLOG ========== */
 
+.blog-content {
+    color: #3d5274;
+}
 
 
 

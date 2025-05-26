@@ -1,3 +1,4 @@
+<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
 <!doctype html>
 <html lang="cs">
 <head>
@@ -81,23 +82,20 @@
                         Partneři
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link<?= is_active('blog') ?>" href="<?= url('blog') ?>">Blog</a>
+                </li>
 
                 <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                     <li class="nav-item">
                         <a class="nav-link<?= is_active('admin') ?>" href="<?= url('admin') ?>">Administrátorská sekce</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= url('admin/logout') ?>">Odhlásit se (<?= htmlspecialchars($_SESSION['user']['username']) ?>)</a>
-                    </li>
-                <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link<?= is_active('admin/login') ?>" href="<?= url('admin/login') ?>">Přihlášení administrátora</a>
-                    </li>
                 <?php endif; ?>
-
             </ul>
 
-            <a href="<?= url('kontakt') ?>" class="btn btn-danger">Kontaktujte nás</a>
+            <div class="d-flex">
+                <a href="<?= url('kontakt') ?>" class="btn btn-danger me-2">Kontaktujte nás</a>
+            </div>
         </div>
     </div>
 </header>
@@ -119,9 +117,22 @@
     </div>
 </div>
 
+<!-- POPOVER PARTNEŘI -->
+<div id="customPartnersPopover" class="popover partners-popover shadow" style="display: none; position: absolute; z-index: 1050;">
+    <div class="popover-body text-center">
+        <img src="<?= url('images/logo/isotra.jpg') ?>" alt="Isotra" class="mb-2">
+        <img src="<?= url('images/logo/neva.jpg') ?>" alt="NEVA" class="mb-2">
+        <img src="<?= url('images/logo/veka_logo.png') ?>" alt="VEKA">
+    </div>
+</div>
+
 
 
 <footer class="text-center py-3 mt-5">
+    <?php if (!isset($_SESSION['user'])): ?>
+        <a href="<?= url('admin/login') ?>" class="small d-block mb-1">Přihlášení pro administrátora</a>
+    <?php endif; ?>
+
     <small>&copy; <?= date('Y') ?> Alukol. Všechna práva vyhrazena.</small>
 </footer>
 
@@ -129,9 +140,11 @@
     Zobrazit akční okno znovu
 </button>
 
+
 <!-- jQuery (nutné pro Lightbox) -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/wdf9deyvy0axz5a7tweh0t00vaiau2htjjxrewbe7krxyv71/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="<?= url('js/scripts.js') ?>"></script>
 <!-- Lightbox JS -->
 <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js"></script>

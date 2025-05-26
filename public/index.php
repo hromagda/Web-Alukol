@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 session_start();
 
+mb_internal_encoding('UTF-8');
+
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../App/Core/helpers.php';
 

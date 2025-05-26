@@ -1,0 +1,13 @@
+<div class="container mt-5 pt-5 blog-content">
+    <a href="/blog" class="btn btn-outline-primary mb-3">
+        &larr; Zpět na blog
+    </a>
+    <h1><?= htmlspecialchars($article['title']) ?></h1>
+
+    <?php if (!empty($article['image'])): ?>
+        <img src="/<?= htmlspecialchars($article['image']) ?>" alt="Obrázek článku" class="img-fluid mb-4">
+    <?php endif; ?>
+
+    <p class="text-muted"><?= date('j. n. Y', strtotime($article['created_at'])) ?></p>
+    <?= $article['content'] ?>
+</div>

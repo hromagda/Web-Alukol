@@ -1,0 +1,47 @@
+<?php ob_start(); ?>
+
+<?php if (!empty($_SESSION['success'])): ?>
+    <div class="alert alert-success">
+        <?= htmlspecialchars($_SESSION['success']) ?>
+    </div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<?php if (!empty($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+        <?= htmlspecialchars($_SESSION['error']) ?>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
+
+    <form action="<?= url('admin/save_article') ?>" method="post" enctype="multipart/form-data">
+        <?= csrf_field() ?>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Nadpis</label>
+            <input type="text" name="title" id="title" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Obsah</label>
+            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Obrázek</label>
+            <input type="file" name="image" id="image" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Uložit článek</button>
+    </form>
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({ selector: '#content', height: 300 });
+    </script>
+
+<?php
+$content = ob_get_clean();
+$title = 'Přidat nový článek';
+include __DIR__ . '/../partials/admin_card.phtml';

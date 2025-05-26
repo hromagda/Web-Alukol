@@ -8,6 +8,11 @@ class View
 {
     public static function render(string $viewPath, array $params = [], string $pageTitle = ''): void
     {
+        // 👉 Start session, pokud ještě neběží
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         // Získáme cestu k samotnému obsahu stránky
         $viewFile = __DIR__ . '/../../views/' . $viewPath . '.phtml';
 

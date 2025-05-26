@@ -1,4 +1,7 @@
-<h2>Přijaté zprávy</h2>
+<?php
+// Zachytíme výpis zpráv jako $content
+ob_start();
+?>
 
 <?php if (empty($messages)): ?>
     <p>Žádné zprávy zatím nepřišly.</p>
@@ -15,3 +18,13 @@
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
+
+<?php include __DIR__ . '/../partials/back_button.phtml'; ?>
+
+<?php
+$content = ob_get_clean();
+$title = 'Přijaté zprávy';
+include __DIR__ . '/../partials/admin_card.phtml';
+?>
+
+

@@ -1,0 +1,56 @@
+<?php
+// Výpis článků vložený jako $content
+ob_start();
+?>
+
+    <p>Přihlášený uživatel: <?= htmlspecialchars($username) ?></p>
+
+<?php if (!empty($_SESSION['success'])): ?>
+    <div class="alert alert-success">
+        <?= htmlspecialchars($_SESSION['success']) ?>
+    </div>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
+
+<?php if (!empty($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+        <?= htmlspecialchars($_SESSION['error']); ?>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Název</th>
+            <th>Slug</th>
+            <th>Vytvořeno</th>
+            <th>Akce</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($articles as $article): ?>
+            <tr>
+                <td><?= $article['id'] ?></td>
+                <td><?= htmlspecialchars($article['title']) ?></td>
+                <td><?= htmlspecialchars($article['slug']) ?></td>
+                <td><?= $article['created_at'] ?></td>
+                <td>
+                    <a href="<?= url('admin/edit_article/' . $article['id']) ?>">Editovat</a> |
+                    <a href="<?= url('admin/delete_article/' . $article['id']) ?>" onclick="return confirm('Opravdu smazat tento článek?')">Smazat</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <a href="<?= url('admin/create_article') ?>" class="btn btn-success mb-3">+ Přidat nový článek</a>
+
+<?php include __DIR__ . '/../partials/back_button.phtml'; ?>
+
+<?php
+$content = ob_get_clean();
+$title = 'Správa článků';
+include __DIR__ . '/../partials/admin_card.phtml';
+?>

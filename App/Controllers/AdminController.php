@@ -3,8 +3,10 @@
 namespace App\Controllers;
 
 use App\Core\View;
+use App\Models\BlogArticle;
 use App\Models\User;
 use App\Models\PromoOffer;
+use App\Validation\ImageValidator;
 
 class AdminController
 {
@@ -273,5 +275,210 @@ class AdminController
         $messages = $model->getAll(); // metoda, kterou přidáme v modelu
 
         View::render('admin/messages', ['messages' => $messages], 'Přijaté zprávy');
+    }
+
+    public function editArticle(string $id): void
+    {
+        $model = new BlogArticle();
+        $article = $model->getById((int) $id);
+
+        View::render('admin/edit_article', [
+            'article' => $article
+        ], 'Úprava článku');
+    }
+
+    public function updateArticle(): void
+    {
+        if (!$this->checkLogin()) {
+            header('Location: ' . url('admin/login'));
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
+                $_SESSION['error'] = "Neplatný CSRF token. Zkuste to prosím znovu.";
+                header('Location: ' . url('admin/edit_article') . '?id=' . urlencode($_POST['id'] ?? ''));
+                exit;
+            }
+
+            $id = $_POST['id'] ?? null;
+            $title = trim($_POST['title'] ?? '');
+            $slug = slugify($title);
+            $content = $_POST['content'] ?? '';
+
+            if ($id && $title && $content) {
+                $article = new BlogArticle();
+                $imagePath = $_POST['existing_image'] ?? null;
+
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $tmpName = $_FILES['image']['tmp_name'];
+                    $originalName = $_FILES['image']['name'];
+
+                    // === VALIDACE OBRÁZKU ===
+                    if (!\App\Validation\ImageValidator::hasValidExtension($originalName)) {
+                        $_SESSION['error'] = "Nepovolená přípona souboru. Povolené: JPG, PNG, GIF, WEBP.";
+                        header('Location: ' . url('admin/edit_article') . '?id=' . urlencode($id));
+                        exit;
+                    }
+
+                    if (!\App\Validation\ImageValidator::isValidMimeType($tmpName)) {
+                        $_SESSION['error'] = "Nepovolený typ obrázku. Povolené typy: JPG, PNG, GIF, WEBP.";
+                        header('Location: ' . url('admin/edit_article') . '?id=' . urlencode($id));
+                        exit;
+                    }
+
+                    if (!\App\Validation\ImageValidator::isBelowMaxSize($tmpName, 5_000_000)) {
+                        $_SESSION['error'] = "Obrázek je příliš velký (max. 5 MB).";
+                        header('Location: ' . url('admin/edit_article') . '?id=' . urlencode($id));
+                        exit;
+                    }
+
+                    if (!\App\Validation\ImageValidator::isWithinDimensions($tmpName, 3000, 2000)) {
+                        $_SESSION['error'] = "Obrázek má příliš velké rozměry. Max. 3000×2000 px.";
+                        header('Location: ' . url('admin/edit_article') . '?id=' . urlencode($id));
+                        exit;
+                    }
+
+                    // === UKLÁDÁNÍ SOUBORU ===
+                    $uploadDir = __DIR__ . '/../../public/uploads/blog/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+
+                    $fileName = uniqid('blog_') . '_' . basename($originalName);
+                    $destination = $uploadDir . $fileName;
+
+                    if (move_uploaded_file($tmpName, $destination)) {
+                        $imagePath = 'uploads/blog/' . $fileName;
+
+                        if (!empty($_POST['existing_image'])) {
+                            $oldImagePath = __DIR__ . '/../../public/' . $_POST['existing_image'];
+                            if (is_file($oldImagePath)) {
+                                unlink($oldImagePath);
+                            }
+                        }
+                    }
+                }
+
+                $updated = $article->update($id, $title, $slug, $content, $imagePath);
+
+                $_SESSION[$updated ? 'success' : 'error'] = $updated
+                    ? "Článek byl úspěšně aktualizován."
+                    : "Nepodařilo se aktualizovat článek.";
+            } else {
+                $_SESSION['error'] = "Všechna pole musí být vyplněna.";
+            }
+
+            header('Location: ' . url('admin/list_articles'));
+            exit;
+        }
+    }
+    public function listArticles(): void
+    {
+        if (!$this->checkLogin()) {
+            header('Location: ' . url('admin/login'));
+            exit;
+        }
+
+        $blogModel = new BlogArticle();
+        $articles = $blogModel->getAll();
+
+        View::render('admin/list_articles', [
+            'articles' => $articles,
+            'username' => $_SESSION['user']['username'],
+        ], 'Správa článků');
+    }
+
+    public function deleteArticle(string $id): void
+    {
+        if (!$this->checkLogin()) {
+            header('Location: ' . url('admin/login'));
+            exit;
+        }
+
+        $blogModel = new BlogArticle();
+
+        // Promazání podle ID, můžeš přidat i kontrolu, jestli článek existuje
+        $blogModel->delete((int)$id);
+
+        header('Location: ' . url('admin/list_articles'));
+        exit;
+    }
+
+    public function createArticle(): void
+    {
+        if (!$this->checkLogin()) {
+            header('Location: ' . url('admin/login'));
+            exit;
+        }
+
+        View::render('admin/create_article', [
+            'username' => $_SESSION['user']['username'] ?? 'admin'
+        ], 'Nový článek');
+    }
+
+    public function saveArticle(): void
+    {
+        if (!$this->checkLogin()) {
+            header('Location: ' . url('admin/login'));
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
+                $_SESSION['error'] = "Neplatný CSRF token.";
+                header('Location: ' . url('admin/create_article'));
+                exit;
+            }
+
+
+            $title = trim($_POST['title'] ?? '');
+            $content = $_POST['content'] ?? '';
+            $slug = slugify($title);
+            $imagePath = null;
+
+            if ($title && $content) {
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $tmpName = $_FILES['image']['tmp_name'];
+                    $originalName = $_FILES['image']['name'];
+
+                    if (!ImageValidator::hasValidExtension($originalName) ||
+                        !ImageValidator::isValidMimeType($tmpName) ||
+                        !ImageValidator::isBelowMaxSize($tmpName, 5_000_000) ||
+                        !ImageValidator::isWithinDimensions($tmpName, 3000, 2000)) {
+
+                        $_SESSION['error'] = "Neplatný obrázek. Ujisti se, že má max. 5 MB a rozměry do 3000×2000 px.";
+                        header('Location: ' . url('admin/create_article'));
+                        exit;
+                    }
+
+                    $uploadDir = __DIR__ . '/../../public/uploads/blog/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+
+                    $fileName = uniqid('blog_') . '_' . basename($originalName);
+                    $destination = $uploadDir . $fileName;
+
+                    if (move_uploaded_file($tmpName, $destination)) {
+                        $imagePath = 'uploads/blog/' . $fileName;
+                    }
+                }
+
+                $articleModel = new BlogArticle();
+                $created = $articleModel->insert($title, $slug, $content, $imagePath);
+
+                $_SESSION[$created ? 'success' : 'error'] = $created
+                    ? "Článek byl úspěšně přidán."
+                    : "Nepodařilo se vytvořit článek.";
+            } else {
+                $_SESSION['error'] = "Všechna pole musí být vyplněna.";
+            }
+
+            header('Location: ' . url('admin/list_articles'));
+            exit;
+        }
     }
 }

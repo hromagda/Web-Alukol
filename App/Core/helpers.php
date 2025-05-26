@@ -1,4 +1,6 @@
 <?php
+
+use voku\helper\ASCII;
 // App/Core/helpers.php
 
 function url(string $path = '', array $query = [], string $fragment = ''): string {
@@ -54,4 +56,10 @@ function csrf_field()
 function validate_csrf_token($token)
 {
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+}
+
+function slugify(string $text): string
+{
+    $text = ASCII::to_slugify($text); // správný převod diakritiky pro slug
+    return trim($text, '-');
 }
