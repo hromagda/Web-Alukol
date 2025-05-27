@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use PDO;
@@ -10,10 +9,15 @@ class User
 
     public function __construct()
     {
-        // Použijeme funkci z helpers.php
         $this->db = get_pdo();
     }
 
+    /**
+     * Najde uživatele podle uživatelského jména.
+     *
+     * @param string $username
+     * @return array|null
+     */
     public function findByUsername(string $username): ?array
     {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
@@ -22,7 +26,12 @@ class User
         return $user ?: null;
     }
 
-    // Přidáme metodu findById pro kontroler (používá se na obnovu session)
+    /**
+     * Najde uživatele podle ID (např. pro obnovu session).
+     *
+     * @param int $id
+     * @return array|null
+     */
     public function findById(int $id): ?array
     {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id LIMIT 1");

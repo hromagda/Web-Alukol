@@ -2,10 +2,17 @@
 
 namespace App\Validation;
 
+/**
+ * Třída pro validaci obrázků.
+ *
+ * Obsahuje metody pro ověření MIME typu, velikosti, rozměrů a přípony souboru.
+ */
 class ImageValidator
 {
     /**
-     * Povolené MIME typy.
+     * Povolené MIME typy obrázků.
+     *
+     * @var string[]
      */
     public static array $defaultAllowedTypes = [
         'image/jpeg',
@@ -15,7 +22,11 @@ class ImageValidator
     ];
 
     /**
-     * Ověří MIME typ obrázku podle skutečného obsahu.
+     * Ověří MIME typ obrázku podle skutečného obsahu souboru.
+     *
+     * @param string $filePath Cesta k souboru.
+     * @param string[]|null $allowedTypes Pole povolených MIME typů, pokud není zadáno, použije se výchozí.
+     * @return bool Vrací true, pokud MIME typ souboru patří mezi povolené, jinak false.
      */
     public static function isValidMimeType(string $filePath, array $allowedTypes = null): bool
     {
@@ -28,7 +39,11 @@ class ImageValidator
     }
 
     /**
-     * Ověří, že velikost souboru není větší než limit.
+     * Ověří, že velikost souboru nepřekračuje maximální povolenou velikost.
+     *
+     * @param string $filePath Cesta k souboru.
+     * @param int $maxBytes Maximální velikost v bytech (výchozí 5 MB).
+     * @return bool Vrací true, pokud je soubor menší nebo roven maximu, jinak false.
      */
     public static function isBelowMaxSize(string $filePath, int $maxBytes = 5_000_000): bool
     {
@@ -36,7 +51,12 @@ class ImageValidator
     }
 
     /**
-     * Ověří rozměry obrázku (např. minimální nebo maximální šířka/výška).
+     * Ověří, že rozměry obrázku nepřekračují dané maximální hodnoty.
+     *
+     * @param string $filePath Cesta k souboru.
+     * @param int $maxWidth Maximální šířka v pixelech (výchozí 3000).
+     * @param int $maxHeight Maximální výška v pixelech (výchozí 2000).
+     * @return bool Vrací true, pokud jsou rozměry obrázku v povoleném rozsahu, jinak false.
      */
     public static function isWithinDimensions(string $filePath, int $maxWidth = 3000, int $maxHeight = 2000): bool
     {
@@ -46,7 +66,11 @@ class ImageValidator
     }
 
     /**
-     * Ověří příponu souboru.
+     * Ověří, zda má soubor platnou příponu.
+     *
+     * @param string $fileName Název souboru.
+     * @param string[] $allowedExtensions Pole povolených přípon (výchozí ['jpg', 'jpeg', 'png', 'gif', 'webp']).
+     * @return bool Vrací true, pokud přípona souboru patří mezi povolené, jinak false.
      */
     public static function hasValidExtension(string $fileName, array $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']): bool
     {

@@ -1,6 +1,18 @@
+/**
+ * Inicializace skriptu po načtení DOM.
+ * Obsahuje logiku pro:
+ * - Zobrazení a ovládání cookie banneru
+ * - Zobrazení promo nabídky v modalu
+ * - Načtení galerie obrázků (lazy load)
+ * - Inicializaci Bootstrap popoverů pro partnery a kontakt
+ * - Inicializaci TinyMCE editoru
+ */
 document.addEventListener("DOMContentLoaded", function () {
 
-    // === COOKIE BANNER ===
+    /**
+     * COOKIE BANNER
+     * Zobrazí banner, pokud uživatel ještě nepřijal cookies.
+     */
     const cookieBanner = document.getElementById("cookieConsentBanner");
     const acceptBtn = document.getElementById("acceptCookiesBtn");
 
@@ -13,7 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // === PROMO NABÍDKA ===
+    /**
+     * PROMO NABÍDKA
+     * Zobrazí promo modal jednou za uživatele.
+     */
     const promoModal = document.getElementById("promoOfferModal");
     const closePromoBtn = document.getElementById("closePromoOfferBtn");
 
@@ -28,7 +43,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // === LAZY LOAD GALERIE ===
+    /**
+     * LAZY LOAD GALERIE
+     * Načte obsah galerie asynchronně pomocí fetch API.
+     */
     const galleryContainer = document.getElementById("gallery-container");
 
     if (galleryContainer) {
@@ -50,7 +68,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // === PARTNEŘI POPOVER ===
+    /**
+     * PARTNEŘI POPOVER
+     * Inicializuje Bootstrap popover pro sekci partneři.
+     */
     const partnersTrigger = document.getElementById('partnersPopover');
     const partnersPopoverElement = document.getElementById('customPartnersPopover');
 
@@ -64,7 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // === KONTAKT POPOVER ===
+    /**
+     * KONTAKT POPOVER
+     * Vytvoří a inicializuje Bootstrap popover s kontaktními informacemi.
+     */
     const contactTrigger = document.getElementById('contactPopover');
 
     if (contactTrigger) {
@@ -87,7 +111,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // === TINYMCE EDITOR ===
+    /**
+     * TINYMCE EDITOR
+     * Inicializuje TinyMCE editor na textarea s id "content".
+     */
     const contentField = document.querySelector('#content');
     if (contentField) {
         tinymce.init({

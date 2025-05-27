@@ -12,6 +12,7 @@
 
     <!-- Formulář pro nahrání nové fotky -->
     <form method="POST" enctype="multipart/form-data" action="<?= url('admin/gallery') ?>">
+        <?= csrf_field() ?>
         <div class="mb-3">
             <input type="file" name="new_image" accept="image/*" required>
             <button type="submit" class="btn btn-primary">Nahrát obrázek</button>
@@ -25,6 +26,7 @@
                 <img src="/images/gallery/<?= htmlspecialchars($img) ?>" class="img-fluid mb-2" alt="">
                 <div><?= htmlspecialchars($img) ?></div>
                 <form method="POST" action="<?= url('admin/gallery') ?>" onsubmit="return confirm('Opravdu smazat tento obrázek?');">
+                    <?= csrf_field() ?>
                     <input type="hidden" name="delete_image" value="<?= htmlspecialchars($img) ?>">
                     <button type="submit" class="btn btn-danger btn-sm mt-1">Smazat</button>
                 </form>

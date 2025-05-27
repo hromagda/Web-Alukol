@@ -4,11 +4,25 @@ namespace App\Controllers;
 
 use App\Core\View;
 
+/**
+ * Kontroler pro zobrazení a načítání galerie realizací.
+ */
 class GalleryController
 {
+
+    /**
+     * Cesta ke složce s obrázky galerie.
+     *
+     * @var string
+     */
     // Cesta ke složce s obrázky (např. public/gallery)
     private string $galleryPath = __DIR__ . '/../../public/images/gallery';
 
+    /**
+     * Zobrazí stránku s galerií a připraví výpis náhledových obrázků.
+     *
+     * @return void
+     */
     public function index(): void
     {
         $images = $this->getThumbnails();
@@ -19,12 +33,23 @@ class GalleryController
         ], 'Galerie realizací');
     }
 
+    /**
+     * Vrací seznam náhledových obrázků (zatím prázdný – připraveno pro budoucí použití).
+     *
+     * @return array Pole názvů náhledových souborů
+     */
     private function getThumbnails(): array
     {
         // Pomocná metoda pro pozdější načítání obrázků
         return [];
     }
 
+    /**
+     * Asynchronně načítá HTML s obrázky galerie, které odpovídají konvenci *_nahled.*
+     * Vytváří HTML bloky pro lightbox galerii.
+     *
+     * @return void
+     */
     public function loadImages(): void
     {
         $html = '';

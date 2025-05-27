@@ -10,14 +10,32 @@ use App\Validation\ContactFormValidator;
 use App\Core\MailView;
 use App\Core\Logger;
 
-
+/**
+ * Kontroler pro zpracování kontaktního formuláře.
+ */
 class ContactController
 {
+    /**
+     * Zobrazí stránku s kontaktním formulářem.
+     *
+     * @return void
+     */
     public function index()
     {
         View::render('contact/index', [], 'Kontakt');
     }
 
+    /**
+     * Zpracuje odeslání kontaktního formuláře:
+     * - Ověří honeypot a CSRF
+     * - Validuje data
+     * - Uloží zprávu do databáze
+     * - Odesílá e-mail pomocí PHPMaileru
+     *
+     * V případě chyby (validace, odeslání e-mailu) se zobrazuje příslušná chybová zpráva.
+     *
+     * @return void
+     */
     public function send()
     {
         //Kontrola honeypot

@@ -5,8 +5,16 @@ namespace App\Controllers;
 use App\Core\View;
 use App\Models\BlogArticle;
 
+/**
+ * Kontroler pro zobrazení veřejného blogu.
+ */
 class BlogController
 {
+    /**
+     * Zobrazí seznam všech článků na blogu.
+     *
+     * @return void
+     */
     public function index(): void
     {
         $model = new BlogArticle();
@@ -17,6 +25,14 @@ class BlogController
         ], 'Blog | Alukol');
     }
 
+    /**
+     * Zobrazí konkrétní článek podle slugu.
+     *
+     * Pokud článek neexistuje, vrátí chybový kód 404.
+     *
+     * @param string $slug Slug článku (např. "posuvne-zaskleni-terasy").
+     * @return void
+     */
     public function show(string $slug): void
     {
         $model = new BlogArticle();

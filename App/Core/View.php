@@ -4,8 +4,25 @@ namespace App\Core;
 
 use App\Models\PromoOffer;
 
+/**
+ * Třída pro vykreslování šablon (view) s podporou layoutu a předávání dat.
+ */
 class View
 {
+    /**
+     * Vykreslí šablonu s daty a vloží ji do hlavního layoutu.
+     *
+     * Metoda spustí session, pokud ještě neběží.
+     * Načte obsah z databáze pro promo nabídku.
+     *
+     * @param string $viewPath Cesta k view souboru relativně k adresáři views bez přípony .phtml (např. 'home/index')
+     * @param array $params Pole dat, která se mají předat do view jako proměnné (pomocí extract)
+     * @param string $pageTitle Titulek stránky pro layout (pokud není zadán, použije se 'Alukol')
+     *
+     * @throws \Exception Pokud view soubor neexistuje
+     *
+     * @return void
+     */
     public static function render(string $viewPath, array $params = [], string $pageTitle = ''): void
     {
         // 👉 Start session, pokud ještě neběží

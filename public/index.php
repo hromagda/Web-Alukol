@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 mb_internal_encoding('UTF-8');
 
