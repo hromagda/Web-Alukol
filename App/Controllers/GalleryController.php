@@ -18,6 +18,32 @@ class GalleryController
     // Cesta ke složce s obrázky (např. public/gallery)
     private string $galleryPath = __DIR__ . '/../../public/images/gallery';
 
+    private array $metaData;
+
+    public function __construct()
+    {
+        $this->metaData = [
+            'title' => 'Galerie realizací',
+            'pageTitle' => 'Galerie realizací – Alukol montáže a servis hliníkových profilů',
+            'description' => 'Prohlédněte si galerii našich realizací hliníkových profilů a služeb. Kvalita a preciznost.',
+            'keywords' => 'galerie, realizace, hliníkové profily, servis, Alukol',
+            'author' => 'Alukol',
+            'ogTitle' => 'Galerie realizací – Alukol',
+            'ogDescription' => 'Prohlédněte si galerii našich realizací hliníkových profilů a služeb. Kvalita a preciznost.',
+            'ogImage' => url('obrazky/nahled-fb/galerie-fb.png'), // zkontroluj cestu a existenci obrázku
+            'ogUrl' => url('https://www.alukol.cz/galerie'),
+            'ogType' => 'website',
+            'locale' => 'cs_CZ'
+        ];
+    }
+
+    private function renderGalleryPage(array $data = [])
+    {
+        // Posíláme metadata jednotlivě jako parametry podle View::render()
+        View::render('gallery', $data, ...array_values($this->metaData));
+    }
+
+
     /**
      * Zobrazí stránku s galerií a připraví výpis náhledových obrázků.
      *
@@ -27,10 +53,9 @@ class GalleryController
     {
         $images = $this->getThumbnails();
 
-        // Načti view galerie (zatím bez obrázků)
-        View::render('gallery', [
+        $this->renderGalleryPage([
             'images' => $images
-        ], 'Galerie realizací');
+        ]);
     }
 
     /**

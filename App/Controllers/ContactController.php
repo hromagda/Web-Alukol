@@ -15,33 +15,38 @@ use App\Core\Logger;
  */
 class ContactController
 {
-    /**
-     * Zobrazí stránku s kontaktním formulářem.
-     *
-     * @return void
-     */
-    public function index()
+    public function __construct()
     {
-        View::render('contact/index', [], 'Kontakt');
+        $this->metaData = [
+            'title' => 'Kontakt',
+            'pageTitle' => 'Kontaktujte nás – Alukol montáže a servis hliníkových profilů',
+            'description' => 'Kontaktujte nás prostřednictvím kontaktního formuláře na stránkách Alukol. Rychlá reakce a profesionální servis.',
+            'keywords' => 'kontakt, hliníkové profily, servis, Alukol',
+            'author' => 'Alukol',
+            'ogTitle' => 'Kontakt – Alukol',
+            'ogDescription' => 'Kontaktujte nás prostřednictvím kontaktního formuláře na stránkách Alukol. Rychlá reakce a profesionální servis.',
+            'ogImage' => url('obrazky/nahled-fb/kontakt-fb.png'),
+            'ogUrl' => url('https://www.alukol.cz/kontakt'),
+            'ogType' => 'website',
+            'locale' => 'cs_CZ'
+        ];
     }
 
-    /**
-     * Zpracuje odeslání kontaktního formuláře:
-     * - Ověří honeypot a CSRF
-     * - Validuje data
-     * - Uloží zprávu do databáze
-     * - Odesílá e-mail pomocí PHPMaileru
-     *
-     * V případě chyby (validace, odeslání e-mailu) se zobrazuje příslušná chybová zpráva.
-     *
-     * @return void
-     */
+    private function renderContactPage(array $data = [])
+    {
+        View::render('contact/index', $data, ...array_values($this->metaData));
+    }
+
+    public function index()
+    {
+        $this->renderContactPage();
+    }
+
     public function send()
     {
-        //Kontrola honeypot
+        // Honeypot check
         if (!empty($_POST['website'])) {
-            // Honeypot byl vyplněn – pravděpodobně bot
-            View::render('contact/index', [
+            $this->renderContactPage([
                 'errors' => ['Zprávu se nepodařilo odeslat.'],
                 'old' => $_POST
             ]);
@@ -57,9 +62,9 @@ class ContactController
             'gdpr'     => $_POST['gdpr'] ?? null,
         ];
 
-        // Ověření CSRF tokenu
+        // CSRF check
         if (!validate_csrf_token($_POST['csrf_token'] ?? '')) {
-            View::render('contact/index', [
+            $this->renderContactPage([
                 'errors' => ['Neplatný CSRF token. Zkuste to prosím znovu.'],
                 'old' => $data,
             ]);
@@ -69,18 +74,17 @@ class ContactController
         $errors = ContactFormValidator::validate($data);
 
         if ($errors) {
-            View::render('contact/index', [
+            $this->renderContactPage([
                 'errors' => $errors,
                 'old' => $data,
             ]);
             return;
         }
 
-        // Uložení do DB
         $contactModel = new ContactMessage();
         $contactModel->save($data['name'], $data['email'], $data['message'], $data['phone'], $data['locality']);
 
-        // Odeslání e-mailu
+        // Send email
         $config = require __DIR__ . '/../../config/mail.php';
         $mail = new PHPMailer(true);
         $mail->CharSet = 'UTF-8';
@@ -99,17 +103,11 @@ class ContactController
 
             $mail->isHTML(true);
             $mail->Subject = 'Nová poptávka z webu Alukol';
-            $mail->Body = MailView::render('contact_message', [
-                'name'     => $data['name'],
-                'email'    => $data['email'],
-                'phone'    => $data['phone'],
-                'locality' => $data['locality'],
-                'message'  => $data['message'],
-            ]);
+            $mail->Body = MailView::render('contact_message', $data);
 
             $mail->send();
 
-            View::render('contact/index', [
+            $this->renderContactPage([
                 'success' => 'Zpráva byla úspěšně odeslána.',
                 'old' => []
             ]);
@@ -119,7 +117,7 @@ class ContactController
                 'data' => $data,
             ]);
 
-            View::render('contact/index', [
+            $this->renderContactPage([
                 'errors' => ['Zprávu se nepodařilo odeslat. Zkuste to prosím později.'],
                 'old' => $data
             ]);

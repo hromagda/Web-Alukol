@@ -57,7 +57,13 @@ class Router
                 $controller = new $controllerClass();
 
                 if (method_exists($controller, $method)) {
-                    call_user_func_array([$controller, $method], $matches);
+                    $result = call_user_func_array([$controller, $method], $matches);
+
+                    // Pokud je to metoda login a máme URL k přesměrování, přesměrujeme
+                    if ($method === 'login' && $result !== null) {
+                        header('Location: ' . $result);
+                        exit;
+                    }
                 } else {
                     http_response_code(500);
                     echo "Metoda $method neexistuje v $controllerClass.";

@@ -1,24 +1,22 @@
-<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
 <!doctype html>
 <html lang="cs">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title><?= $pageTitle ?? 'Alukol – Montáže pergol, žaluzií, markýz a posuvného zasklení' ?></title>
+    <title><?= htmlspecialchars($pageTitle) ?></title>
 
     <!-- SEO a OpenGraph -->
-    <meta name="description" content="Alukol se specializuje na montáž hliníkových profilů...">
-    <meta name="keywords" content="hliníkové profily, žaluzie, pergoly...">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Alukol">
+    <meta name="description" content="<?= htmlspecialchars($metaDescription) ?>">
+    <meta name="keywords" content="<?= htmlspecialchars($metaKeywords) ?>">
+    <meta name="author" content="<?= htmlspecialchars($metaAuthor) ?>">
 
-    <meta property="og:title" content="Alukol – Montáže pergol..." />
-    <meta property="og:description" content="Alukol poskytuje montáž..." />
-    <meta property="og:image" content="obrazky/nahled-fb/fb.png" />
-    <meta property="og:url" content="https://www.alukol.cz" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:title" content="<?= htmlspecialchars($ogTitle) ?>" />
+    <meta property="og:description" content="<?= htmlspecialchars($ogDescription) ?>" />
+    <meta property="og:image" content="<?= htmlspecialchars($ogImage) ?>" />
+    <meta property="og:url" content="<?= htmlspecialchars($ogUrl) ?>" />
+    <meta property="og:type" content="<?= htmlspecialchars($ogType) ?>" />
+    <meta property="og:locale" content="<?= htmlspecialchars($ogLocale) ?>" />
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="<?= url('images/favicon/favicon.ico') ?>">
@@ -36,7 +34,7 @@
     <!-- AKČNÍ NABÍDKA (vyskakovací okno) -->
     <div id="promoOfferModal" class="promo-offer-modal" style="display: none;">
         <div class="promo-offer-content">
-            <h1><?= htmlspecialchars($promoContent) ?></h1>
+            <h2><?= htmlspecialchars($promoContent) ?></h2>
             <p><span>Domluvte si zaměření ZDARMA právě teď!</span></p>
             <a href="<?= url('kontakt') ?>" class="btn btn-danger me-5">Kontaktujte nás</a>
             <button id="closePromoOfferBtn" class="close-promo-btn" aria-label="Zavřít">×</button>

@@ -10,7 +10,8 @@ use App\Validation\ImageValidator;
 
 /**
  * Class AdminController
- * Spravuje administrátorskou sekci (přihlášení, správa galerie, zpráv, článků apod.)
+ * Spravuje administrátorskou sekci – přihlášení, odhlášení, dashboard,
+ * * úpravu textu akční nabídky, správu galerie (nahrávání/mazání obrázků, náhledy).
  */
 class AdminController
 {
@@ -20,18 +21,18 @@ class AdminController
      * AdminController constructor.
      * Inicializuje model pro práci s uživateli.
      */
-    public function __construct()
+    public function __construct(User $userModel = null)
     {
-        // Použijeme nový konstruktor, který v Useru už volá get_pdo()
-        $this->userModel = new User();
+        $this->userModel = $userModel ?: new User();
     }
 
     /**
-     * Zobrazí přihlašovací formulář a zpracuje přihlášení.
+     * Zobrazí přihlašovací formulář a zpracuje přihlášení uživatele.
+     * Ukládá přihlášeného uživatele do session a nastaví cookie.
      *
      * @return void
      */
-    public function login(): void
+    public function login(): ?string
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'] ?? '';
@@ -39,30 +40,30 @@ class AdminController
 
             $user = $this->userModel->findByUsername($username);
 
-
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user'] = [
                     'id' => $user['id'],
                     'username' => $user['username'],
                     'role' => $user['role']
                 ];
-                // Nastavit cookie pro trvalé přihlášení (14 dní)
                 setcookie('user_id', $user['id'], time() + 1209600, '/', '', false, true);
 
-                header('Location: ' . url('admin'));
-                exit;
+                return url('admin');  // Vrátí URL pro přesměrování
             } else {
                 $error = "Špatné uživatelské jméno nebo heslo.";
                 View::render('admin/login', ['error' => $error], 'Přihlášení administrátora');
-                return;
+                return null;
             }
         }
 
         View::render('admin/login', [], 'Přihlášení administrátora');
+        return null;
     }
 
+
     /**
-     * Zobrazí úvodní administrátorský dashboard.
+     * Zobrazí úvodní přehled (dashboard) pro administrátora.
+     * * Povoleno pouze přihlášeným uživatelům.
      *
      * @return void
      */
@@ -75,9 +76,9 @@ class AdminController
 
     /**
      * Ověří, zda je uživatel přihlášen jako administrátor.
-     * Využívá session nebo cookie.
+     * Používá session nebo cookie.
      *
-     * @return bool
+     * @return bool True, pokud je přihlášen administrátor, jinak false.
      */
     private function checkLogin(): bool
     {
@@ -128,7 +129,8 @@ class AdminController
     }
 
     /**
-     * Zobrazí a zpracuje formulář pro úpravu textu akční nabídky.
+     * Zobrazí formulář pro úpravu textu akční nabídky.
+     * Zpracuje POST požadavek a uloží novou hodnotu do databáze.
      *
      * @return void
      */
@@ -383,9 +385,9 @@ class AdminController
             exit;
         }
 
-        $slug = slugify($title);
-
         $article = new BlogArticle();
+        $slug = $article->generateUniqueSlug($title);
+        
         $imagePath = $_POST['existing_image'] ?? null;
 
         // Zpracování uploadu obrázku
@@ -457,6 +459,12 @@ class AdminController
         header('Location: ' . url('admin/list_articles'));
         exit;
     }
+
+    /**
+     * Zobrazí seznam všech blogových článků v administraci.
+     *
+     * @return void
+     */
     public function listArticles(): void
     {
         $this->redirectIfNotLoggedIn();
@@ -470,6 +478,12 @@ class AdminController
         ], 'Správa článků');
     }
 
+    /**
+     * Odstraní článek podle zadaného ID a přesměruje zpět na seznam článků.
+     *
+     * @param string $id ID článku k odstranění (převedeno na integer)
+     * @return void
+     */
     public function deleteArticle(string $id): void
     {
         $this->redirectIfNotLoggedIn();
@@ -483,6 +497,11 @@ class AdminController
         exit;
     }
 
+    /**
+     * Zobrazí formulář pro vytvoření nového článku.
+     *
+     * @return void
+     */
     public function createArticle(): void
     {
         $this->redirectIfNotLoggedIn();
@@ -492,6 +511,12 @@ class AdminController
         ], 'Nový článek');
     }
 
+    /**
+     * Zpracuje odeslání formuláře pro vytvoření nového článku,
+     * včetně validace CSRF tokenu a nahrání obrázku.
+     *
+     * @return void
+     */
     public function saveArticle(): void
     {
         $this->redirectIfNotLoggedIn();
@@ -507,7 +532,8 @@ class AdminController
 
             $title = trim($_POST['title'] ?? '');
             $content = $_POST['content'] ?? '';
-            $slug = slugify($title);
+            $articleModel = new BlogArticle();
+            $slug = $articleModel->generateUniqueSlug($title);
             $imagePath = null;
 
             if ($title && $content) {
@@ -552,4 +578,5 @@ class AdminController
             exit;
         }
     }
+
 }

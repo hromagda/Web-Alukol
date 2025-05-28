@@ -10,14 +10,14 @@ use App\Models\PromoOffer;
 class View
 {
     /**
-     * Vykreslí šablonu s daty a vloží ji do hlavního layoutu.
+     * Vykreslí konkrétní view šablonu s předanými daty a vloží ji do hlavního layoutu.
      *
-     * Metoda spustí session, pokud ještě neběží.
-     * Načte obsah z databáze pro promo nabídku.
+     * Načte promo text z databáze (např. "Akční nabídka") a předá ho do layoutu.
+     * Titulek stránky a další meta informace lze nastavit pomocí proměnných v poli $params.
      *
-     * @param string $viewPath Cesta k view souboru relativně k adresáři views bez přípony .phtml (např. 'home/index')
-     * @param array $params Pole dat, která se mají předat do view jako proměnné (pomocí extract)
-     * @param string $pageTitle Titulek stránky pro layout (pokud není zadán, použije se 'Alukol')
+     * @param string $viewPath Cesta k souboru view relativně k adresáři `views/` bez přípony `.phtml` (např. 'home/index')
+     * @param array $params Asociativní pole dat, která se extrahují do šablony jako proměnné
+     * @param string $pageTitle Titulek stránky; pokud není zadán, použije se výchozí 'Alukol'
      *
      * @throws \Exception Pokud view soubor neexistuje
      *
@@ -25,11 +25,6 @@ class View
      */
     public static function render(string $viewPath, array $params = [], string $pageTitle = ''): void
     {
-        // 👉 Start session, pokud ještě neběží
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         // Získáme cestu k samotnému obsahu stránky
         $viewFile = __DIR__ . '/../../views/' . $viewPath . '.phtml';
 
@@ -53,6 +48,17 @@ class View
 
         // Vložíme ho do layoutu
         $pageTitle = $pageTitle ?: 'Alukol';
+
+        $metaDescription = $metaDescription ?? 'Alukol se specializuje na montáž hliníkových profilů...';
+        $metaKeywords = $metaKeywords ?? 'hliníkové profily, žaluzie, pergoly...';
+        $metaAuthor = $metaAuthor ?? 'Alukol';
+
+        $ogTitle = $ogTitle ?? $pageTitle;
+        $ogDescription = $ogDescription ?? $metaDescription;
+        $ogImage = $ogImage ?? url('obrazky/nahled-fb/fb.png');
+        $ogUrl = $ogUrl ?? 'https://www.alukol.cz';
+        $ogType = $ogType ?? 'website';
+        $ogLocale = $ogLocale ?? 'cs_CZ';
         include __DIR__ . '/../../views/layout.phtml';
     }
 }

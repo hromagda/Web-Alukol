@@ -7,9 +7,9 @@ class ContactMessage
 {
     private $db;
 
-    public function __construct()
+    public function __construct(PDO $pdo = null)
     {
-        $this->db = get_pdo();
+        $this->db = $pdo ?? get_pdo();
     }
 
     /**

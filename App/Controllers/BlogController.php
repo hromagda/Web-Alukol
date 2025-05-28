@@ -44,8 +44,15 @@ class BlogController
             return;
         }
 
+        $pageTitle = $article['title'] . ' | Alukol';
+        $pageDescription = mb_substr(strip_tags($article['content']), 0, 150) . '...';
+        $pageKeywords = 'pergoly, zasklení, ' . $article['title'];
+
         View::render('blog/show', [
-            'article' => $article
-        ], $article['title'] . ' | Alukol');
+            'article' => $article,
+            'pageTitle' => $pageTitle,
+            'metaDescription' => $pageDescription,
+            'metaKeywords' => $pageKeywords,
+        ]);
     }
 }

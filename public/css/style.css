@@ -370,8 +370,8 @@ main {
     position: relative;
 }
 
-.promo-offer-content h1 {
-    font-size: 2.5rem;
+.promo-offer-content h2 {
+    font-size: 3rem;
     font-weight: bold;
 }
 
@@ -481,7 +481,7 @@ main {
     color: #3d5274;
 }
 
-.realizujeme h2 {
+.realizujeme h1 {
     color: #3d5274;
 }
 
