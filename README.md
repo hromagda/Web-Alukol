@@ -6,7 +6,7 @@ Oficiální webové stránky firmy Alukol – specializace na posuvné hliníkov
 
 ## ✨ O projektu
 
-Web je postavený s cílem představit portfolio realizací, informovat o službách a produktech firmy Alukol a zprostředkovat kontaktní formulář pro poptávky.
+Web je postavený s cílem představit portfolio realizací, informovat o službách a produktech firmy Alukol a zprostředkovat kontaktní formulář pro poptávky.  
 🟢 Živá ukázka: [https://www.alukol.cz](https://www.alukol.cz)
 
 **Klíčové vlastnosti:**
@@ -38,11 +38,11 @@ Web je postavený s cílem představit portfolio realizací, informovat o služb
 
 ## 📁 Struktura projektu
 
-/public - veřejné soubory (CSS, JS, obrázky)
-/app - kontrolery, modely, jádro MVC (Router.php)
-/views - šablony stránek (.phtml)
-/config - konfigurační soubory
-/vendor - externí knihovny (např. PHPMailer)
+/public - veřejné soubory (CSS, JS, obrázky)  
+/app - kontrolery, modely, jádro MVC (Router.php)  
+/views - šablony stránek (.phtml)  
+/config - konfigurační soubory  
+/vendor - externí knihovny (např. PHPMailer)  
 
 yaml
 Zkopírovat
